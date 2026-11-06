@@ -29,6 +29,10 @@ test('La foto completa y el contenido caben en teléfono, tableta y escritorio',
       await page.setViewportSize({ width, height: 844 });
       await page.goto(base);
       await page.locator('.product').first().waitFor();
+      await page.evaluate(async () => {
+        await document.querySelector('.hero-image img').decode();
+        await document.fonts.ready;
+      });
       const result = await page.evaluate(() => {
         const image = document.querySelector('.hero-image img');
         const box = image.getBoundingClientRect();
